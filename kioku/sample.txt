@@ -1,5 +1,5 @@
-山 : mountain : -1
+山 : mountain : 0
 日 : day, sun : 1
-火 : fire
-水 : water
-土 : earth
+火 : fire : 1
+水 : water : 1
+土 : earth : 1

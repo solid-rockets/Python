@@ -24,8 +24,12 @@ def await_key():
       return event
     else:
       event = await_event()
-      print(event)
 
+def draw_surface_at_y(screen, surface, y):
+  surface_width = surface.get_width()
+  surface_x = (SCREEN_DIMS[0] / 2) - (surface_width / 2)
+  screen.blit(surface, (surface_x, y))
+  
 def draw_card(front, back):
   global SCREEN_DIMS
   global BLACK
@@ -35,16 +39,13 @@ def draw_card(front, back):
 
   screen.fill(BLACK)
 
-  print(front)
-  print(back)
-
   if front is not None:
     front_surface = front_font.render(front, True, WHITE)
-    screen.blit(front_surface, (50, 100))
+    draw_surface_at_y(screen, front_surface, 100)
 
   if back is not None:
     back_surface = back_font.render(back, True, WHITE)
-    screen.blit(back_surface, (50, 200))
+    draw_surface_at_y(screen, back_surface, 200)
 
   pygame.display.flip()
 
