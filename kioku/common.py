@@ -9,6 +9,7 @@ def convert_into_line(card):
   return f"{card['front']} : {card['back']} : {card['score']}"
 
 def convert_into_card(line):
+  line = line.replace("：", ":").replace("；", ";") # Replace JP chars.
   fields = line.split(":")
 
   front = fields[0].strip()

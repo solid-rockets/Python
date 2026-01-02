@@ -8,6 +8,9 @@ SCREEN_DIMS = (640, 480)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
+FRONT_FONT_SIZE = 70
+BACK_FONT_SIZE = 45
+
 FONT_NAMES = ["TakaoPMincho"] # Add font names here.
 
 # Functions
@@ -44,8 +47,11 @@ def draw_card(front, back):
     draw_surface_at_y(screen, front_surface, 100)
 
   if back is not None:
-    back_surface = back_font.render(back, True, WHITE)
-    draw_surface_at_y(screen, back_surface, 200)
+    substrings = back.split(";")
+    for i in range(0, len(substrings)):
+      s = substrings[i]
+      back_surface = back_font.render(s, True, WHITE)
+      draw_surface_at_y(screen, back_surface, 200 + BACK_FONT_SIZE * i)
 
   pygame.display.flip()
 
@@ -59,8 +65,8 @@ pygame.display.set_caption("kioku")
 
 screen = pygame.display.set_mode(SCREEN_DIMS)
 
-front_font = pygame.font.SysFont(FONT_NAMES, 70)
-back_font = pygame.font.SysFont(FONT_NAMES, 45)
+front_font = pygame.font.SysFont(FONT_NAMES, FRONT_FONT_SIZE)
+back_font = pygame.font.SysFont(FONT_NAMES, BACK_FONT_SIZE)
 
 while is_running:
   test_deck = c.get_test_cards(full_deck)
