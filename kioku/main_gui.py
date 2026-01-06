@@ -10,6 +10,7 @@ WHITE = (255, 255, 255)
 
 FRONT_FONT_SIZE = 70
 BACK_FONT_SIZE = 45
+CARD_COUNT_FONT_SIZE = 20
 
 FONT_NAMES = ["TakaoPMincho"] # Add font names here.
 
@@ -28,30 +29,27 @@ def await_key():
     else:
       event = await_event()
 
-def draw_surface_at_y(screen, surface, y):
+def draw_surface_at_y(surface, y):
   surface_width = surface.get_width()
   surface_x = (SCREEN_DIMS[0] / 2) - (surface_width / 2)
   screen.blit(surface, (surface_x, y))
-  
-def draw_card(front, back):
-  global SCREEN_DIMS
-  global BLACK
-  global WHITE
-  global front_font
-  global back_font
 
+def draw_card(front, back):
   screen.fill(BLACK)
+
+  card_count_surface = card_count_font.render(str(card_count), True, WHITE)
+  draw_surface_at_y(card_count_surface, 5)
 
   if front is not None:
     front_surface = front_font.render(front, True, WHITE)
-    draw_surface_at_y(screen, front_surface, 100)
+    draw_surface_at_y(front_surface, 100)
 
   if back is not None:
     substrings = back.split(";")
     for i in range(0, len(substrings)):
       s = substrings[i]
       back_surface = back_font.render(s, True, WHITE)
-      draw_surface_at_y(screen, back_surface, 200 + BACK_FONT_SIZE * i)
+      draw_surface_at_y(back_surface, 200 + BACK_FONT_SIZE * i)
 
   pygame.display.flip()
 
@@ -67,6 +65,9 @@ screen = pygame.display.set_mode(SCREEN_DIMS)
 
 front_font = pygame.font.SysFont(FONT_NAMES, FRONT_FONT_SIZE)
 back_font = pygame.font.SysFont(FONT_NAMES, BACK_FONT_SIZE)
+card_count_font = pygame.font.SysFont(FONT_NAMES, CARD_COUNT_FONT_SIZE)
+
+card_count = 0
 
 while is_running:
   test_deck = c.get_test_cards(full_deck)
@@ -88,6 +89,8 @@ while is_running:
       case _: # Leave the game if anything else gets pressed
         is_running = False
         break
+
+    card_count += 1
 
   c.reset_cards(full_deck)
 
