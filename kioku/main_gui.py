@@ -37,8 +37,10 @@ def draw_surface_at_y(surface, y):
 def draw_card(front, back):
   screen.fill(BLACK)
 
-  card_count_surface = card_count_font.render(str(card_count), True, WHITE)
-  draw_surface_at_y(card_count_surface, 5)
+  score = 100 if card_count == 0 else 100 * correct_count // card_count
+  score_str = f"{correct_count} / {card_count} = {score}%"
+  score_surface = card_count_font.render(score_str, True, WHITE)
+  draw_surface_at_y(score_surface, 5)
 
   if front is not None:
     front_surface = front_font.render(front, True, WHITE)
@@ -68,6 +70,7 @@ back_font = pygame.font.SysFont(FONT_NAMES, BACK_FONT_SIZE)
 card_count_font = pygame.font.SysFont(FONT_NAMES, CARD_COUNT_FONT_SIZE)
 
 card_count = 0
+correct_count = 0
 
 while is_running:
   test_deck = c.get_test_cards(full_deck)
@@ -84,12 +87,12 @@ while is_running:
     match event.text:
       case "y" | "Y":
         card["score"] += 1
+        correct_count += 1
       case "n" | "N":
         card["score"] -= 1
       case _: # Leave the game if anything else gets pressed
         is_running = False
         break
-
     card_count += 1
 
   c.reset_cards(full_deck)
