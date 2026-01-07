@@ -5,3 +5,4 @@ kioku.sh <command> <path-to-file>
 Available commands:
 - tui
 - gui
+- add
