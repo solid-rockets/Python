@@ -10,3 +10,4 @@ Available commands:
 - tui
 - gui
 - add
+- list
