@@ -1,4 +1,5 @@
 import sys
+import os
 import random
 
 # Constants
@@ -26,6 +27,10 @@ def convert_into_card(line):
 # Read all lines and convert them into cards.
 def read_deck_from_path(deck_path):
   cards = []
+
+  if not os.path.exists(deck_path):
+    with open(deck_path, "w"):
+      pass
 
   with open(deck_path, "r") as f:
     for line in f:
