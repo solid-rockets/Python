@@ -1,0 +1,1 @@
+- replace #!/bin/bash with #!/bin/sh
