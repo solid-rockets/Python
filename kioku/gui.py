@@ -12,7 +12,9 @@ FRONT_FONT_SIZE = 70
 BACK_FONT_SIZE = 45
 CARD_COUNT_FONT_SIZE = 20
 
-FONT_NAMES = ["TakaoPMincho"] # Add font names here.
+FONT_NAMES = [
+  "Noto Sans CJK KR"
+] # Add font names here.
 
 # Functions
 def await_event():
