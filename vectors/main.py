@@ -7,7 +7,7 @@ HEIGHT = 480
 SCREEN_DIMS = (WIDTH, HEIGHT)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-DBLUE = (0, 0, 100)
+DBLUE = (0, 0, 50)
 
 # Functions
 def make_vec(x, y, z):
@@ -89,7 +89,15 @@ def draw_line_from_cube(cube_arr, mat, ia, ib):
   pa = mat @ va
   pb = mat @ vb
 
-  # TODO: apply perspective
+  # Apply naive perspective based on the z-axis.
+  pa[0][0] /= pa[2][0]
+  pa[1][0] /= pa[2][0]
+  pb[0][0] /= pb[2][0]
+  pb[1][0] /= pb[2][0]
+
+  # Adjust the size of the vectors (unit-like) to match the screen.
+  pa = screen_mat @ pa
+  pb = screen_mat @ pb
 
   pygame.draw.line(screen, WHITE, (pa[0][0], pa[1][0]), (pb[0][0], pb[1][0]), 1)
 
@@ -115,14 +123,19 @@ def draw_cube(cube_arr, mat):
 def draw_stuff():
   cube_arr = make_cube_arr()
 
+  # Draw a rotating cube.
   total_mat = mult_mat_arr([
-    make_trans_mat(WIDTH/2, HEIGHT/2, 0),
-    make_scale_mat(WIDTH/4, WIDTH/4, 1),
-    make_rota_z_mat(rota_angle),
-    make_rota_x_mat(30),
-    make_rota_y_mat(30)
+    make_trans_mat(0, 0, 3),
+    make_rota_z_mat(rota_angle)
   ])
+  draw_cube(cube_arr, total_mat)
 
+  # Draw the base.
+  total_mat = mult_mat_arr([
+    make_trans_mat(0, 2, 3),
+    make_rota_y_mat(rota_angle),
+    make_scale_mat(1, .25, 1),
+  ])
   draw_cube(cube_arr, total_mat)
 
 # Init
@@ -131,6 +144,10 @@ pygame.display.set_caption("vectors")
 
 screen = pygame.display.set_mode(SCREEN_DIMS)
 #screen = pygame.display.set_mode(SCREEN_DIMS, pygame.FULLSCREEN)
+
+screen_mat = mult_mat_arr([
+  make_trans_mat(WIDTH/2, HEIGHT/2, 3),
+  make_scale_mat(WIDTH/4, WIDTH/4, 1)])
 
 clock = pygame.time.Clock()
 
