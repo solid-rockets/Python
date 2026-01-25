@@ -26,8 +26,6 @@ def convert_into_card(line):
     negs = int(fields[2].strip())
     score = int(fields[3].strip())
 
-  score = 0 if len(fields) <= 2 else int(fields[2].strip())
-
   return {
     "front": front,
     "back": back,
