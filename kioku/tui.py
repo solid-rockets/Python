@@ -16,6 +16,7 @@ while is_running:
       case("y"):
         card["score"] += 1
       case("n"):
+        card["negs"]  += 1
         card["score"] -= 1
       case _:
         is_running = False

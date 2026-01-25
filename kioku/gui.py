@@ -91,6 +91,7 @@ while is_running:
         card["score"] += 1
         correct_count += 1
       case "n" | "N":
+        card["negs"]  += 1
         card["score"] -= 1
       case _: # Leave the game if anything else gets pressed
         is_running = False

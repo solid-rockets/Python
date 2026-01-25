@@ -7,7 +7,7 @@ MAX_IN_TEST = 20
 
 # Logic
 def convert_into_line(card):
-  return f"{card['front']} : {card['back']} : {card['score']}"
+  return f"{card['front']} : {card['back']} : {card['negs']} : {card['score']}"
 
 def convert_into_card(line):
   line = line.replace("：", ":").replace("；", ";") # Replace JP chars.
@@ -15,12 +15,23 @@ def convert_into_card(line):
 
   front = fields[0].strip()
   back = fields[1].strip()
+
+  negs = 0
+  score = 0
+
+  if len(fields) == 3:
+    negs = 0
+    score = int(fields[2].strip())
+  elif len(fields) == 4:
+    negs = int(fields[2].strip())
+    score = int(fields[3].strip())
+
   score = 0 if len(fields) <= 2 else int(fields[2].strip())
 
   return {
-    "type": "card",
     "front": front,
     "back": back,
+    "negs": negs,
     "score": score
   }
 

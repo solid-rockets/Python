@@ -15,6 +15,7 @@ while is_running:
     card = {}
     card["front"] = front_text
     card["back"] = back_text
+    card["negs"] = 0
     card["score"] = 0
     full_deck.append(card)
 
